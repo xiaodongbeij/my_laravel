@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['create', 'store']
+        ]);
+
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     public function create()
     {
         return view('user.create');
@@ -16,7 +27,6 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        if (!Auth::check()) return redirect('login');
         return view('user.show', compact('user'));
     }
 
@@ -41,11 +51,13 @@ class UserController extends Controller
 
     protected function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('user.edit', compact('user'));
     }
 
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
