@@ -16,6 +16,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        if (!Auth::check()) return redirect('login');
         return view('user.show', compact('user'));
     }
 
