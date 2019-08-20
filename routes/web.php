@@ -15,5 +15,12 @@ Route::get('/', 'StaticPagesController@home')->name('home');
 Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 
+// 显示登录页面
+Route::get('login', 'SessionsController@create')->name('login');
+//创建新会话（登录）
+Route::post('login', 'SessionsController@store')->name('login');
+// 销毁会话（退出登录）
+Route::post('logout', 'SessionsController@')->name('logout');
+
 // RESTful
 Route::resource('user', 'UserController');
