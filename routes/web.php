@@ -24,3 +24,6 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 
 // RESTful
 Route::resource('user', 'UserController');
+
+// 邮件认证
+Route::get('signup/confirm/{token}', 'UserController@confirmEmail')->name('confirm_email');
